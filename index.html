@@ -169,20 +169,9 @@ body.locked{overflow:hidden}
 .names:not(.in) .ramp,.names:not(.in) .ramp *{animation-play-state:paused}
 
 /* ---------- fonds : monuments de Bafoussam ---------- */
-.castle.fond{display:block;height:clamp(340px,95vw,760px);object-fit:cover;opacity:.26;color:inherit;z-index:0;mix-blend-mode:multiply;
-  /* gravure « imprimée en creux » : liseré clair dessous, ombre dessus */
-  filter:drop-shadow(1px 1px 0 rgba(255,250,240,.95));
-  -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 76%,transparent);mask-image:linear-gradient(180deg,transparent,#000 22%,#000 76%,transparent)}
-/* papier ancien en relief */
-.paper-tex{position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='p' x='0' y='0'><feTurbulence type='fractalNoise' baseFrequency='0.035 0.05' numOctaves='5' seed='7' stitchTiles='stitch' result='n'/><feDiffuseLighting in='n' lighting-color='%23FBF5EA' surfaceScale='2.4' result='l'><feDistantLight azimuth='225' elevation='58'/></feDiffuseLighting><feColorMatrix in='l' values='.6 0 0 0 .42  0 .55 0 0 .41  0 0 .45 0 .43  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.9' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .24  0 0 0 .22 -.04'/></filter><rect width='100%25' height='100%25' filter='url(%23f)'/></svg>");
-  background-size:360px 360px,300px 300px;mix-blend-mode:multiply;opacity:.6}
-.paper-tex::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(150,112,62,.16),transparent 14%,transparent 86%,rgba(150,112,62,.16)),
-             radial-gradient(ellipse at 30% 20%,rgba(190,150,90,.07),transparent 40%),radial-gradient(ellipse at 75% 65%,rgba(170,128,70,.08),transparent 45%);
-  background-size:100% 100%,100% 1400px,100% 1700px}
+.castle.fond{display:block;height:clamp(240px,60vw,560px);object-fit:cover;opacity:.2;color:inherit;z-index:0;
+  filter:sepia(.3) saturate(.85) contrast(.95);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 24%,#000 74%,transparent);mask-image:linear-gradient(180deg,transparent,#000 24%,#000 74%,transparent)}
 .i-fond{position:absolute;left:0;right:0;bottom:0;width:100%;height:46%;object-fit:cover;object-position:center 30%;opacity:.14;pointer-events:none;
   filter:sepia(.35) saturate(.8);-webkit-mask-image:linear-gradient(180deg,transparent,#000 55%);mask-image:linear-gradient(180deg,transparent,#000 55%)}
 .i-names .slogan{font-family:var(--f-label);font-size:clamp(.6rem,2.4vw,.75rem);letter-spacing:.32em;text-transform:uppercase;color:var(--green-2);margin-top:14px}
@@ -462,8 +451,23 @@ header.hero{position:relative;z-index:10;display:flex;flex-direction:column;alig
 @keyframes shad{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.85);opacity:.7}}
 .bob .box{position:absolute;left:50%;bottom:-4px;width:200px;height:auto;margin-left:-100px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.28));transform-origin:50% 90%;transition:transform .5s cubic-bezier(.5,-.6,.3,1.6)}
 .giftbtn:hover .box{transform:translateY(-6px) rotate(-3deg)}
-.giftbtn.pop .box{animation:giftPop .8s cubic-bezier(.3,1.5,.5,1)}
-@keyframes giftPop{0%{transform:none}20%{transform:scale(.92,1.06) rotate(-4deg)}45%{transform:translateY(-22px) scale(1.06) rotate(5deg)}70%{transform:translateY(0) rotate(-2deg)}100%{transform:none}}
+.bob .box{display:block;aspect-ratio:520/529}
+.box img{position:absolute;left:0;top:0;width:100%;height:100%}
+.box .base{clip-path:polygon(0 41.5%,4% 42%,27% 49%,50% 56.5%,71% 51.5%,96% 45.5%,100% 45.5%,100% 100%,0 100%)}
+.box .lid{z-index:2;clip-path:polygon(0 0,100% 0,100% 47%,96% 47%,71% 53%,50% 58.5%,27% 51%,4% 44%,0 43.5%);transform-origin:8% 45%}
+.box .glow{position:absolute;z-index:1;left:50%;top:44%;width:60%;height:30%;margin:-15% 0 0 -30%;border-radius:50%;background:radial-gradient(closest-side,#FFF8E1,rgba(255,214,120,.85) 35%,rgba(240,170,60,.35) 65%,transparent);opacity:0;transform:scale(.2)}
+.box .rays{position:absolute;z-index:1;left:50%;top:40%;width:150%;aspect-ratio:1;margin:-75% 0 0 -75%;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,226,150,.55) 0 6deg,transparent 6deg 22deg);-webkit-mask-image:radial-gradient(closest-side,#000 20%,transparent);mask-image:radial-gradient(closest-side,#000 20%,transparent);opacity:0;transform:scale(.2)}
+.giftbtn.open .bob{animation:none}
+.giftbtn.open .box{transform:none;animation:boxShake .6s ease-in-out}
+@keyframes boxShake{0%,100%{transform:none}15%{transform:scale(1.04,.95)}30%{transform:rotate(-6deg)}45%{transform:rotate(6deg)}60%{transform:rotate(-4deg)}75%{transform:rotate(3deg) translateY(-4px)}}
+.giftbtn.open .lid{animation:lidOff .9s .55s cubic-bezier(.25,.7,.35,1) forwards}
+@keyframes lidOff{0%{transform:none}35%{transform:translateY(-30%) rotate(-6deg)}100%{transform:translate(-38%,-62%) rotate(-32deg)}}
+.giftbtn.open .glow{animation:glowUp 1s .7s ease-out forwards}
+@keyframes glowUp{0%{opacity:0;transform:scale(.2)}50%{opacity:1;transform:scale(1.3)}100%{opacity:.9;transform:scale(1.1)}}
+.giftbtn.open .rays{animation:raysUp 1.4s .75s ease-out forwards}
+@keyframes raysUp{0%{opacity:0;transform:scale(.2) rotate(0)}40%{opacity:1}100%{opacity:.8;transform:scale(1) rotate(40deg)}}
+.giftbtn.open .confetti i{animation-delay:.8s}
+.giftbtn.open .ghint{opacity:0;transition:opacity .3s}
 .bob .pe{position:absolute;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
 .confetti{position:absolute;left:50%;bottom:187px;z-index:0;pointer-events:none}
 .confetti i{position:absolute;left:0;top:0;opacity:0}
@@ -673,7 +677,7 @@ dialog[open] .modal{animation:mIn .35s var(--ease)}
 
 <!-- ================= FAIRE-PART ================= -->
 <main class="invite grain" id="invite">
-  <div class="paper-tex"></div>
+  <div class="bgfx foil-pattern" style="opacity:.35"></div>
 
   <!-- EN-TÊTE -->
   <header class="hero">
@@ -727,6 +731,7 @@ nous avons l'honneur de vous convier
         <div class="sep"></div>
         <div class="evt">
           <span class="tag">Mariage traditionnel</span>
+          <span class="place">Ndiengbou Melam, chez TATAFO</span>
           <div class="row"><span>À 18h00</span><span>Vendredi</span></div>
           <div class="datebox"><span class="d">27</span><div class="v"></div><div class="my"><span>Novembre</span><span>2026</span></div></div>
         </div>
@@ -869,7 +874,7 @@ nous avons l'honneur de vous convier
           <div class="confetti" id="confetti"></div>
           <div class="bob">
             <div class="shadow"></div>
-            <img class="box" src="img/cadeau.webp" alt="" width="520" height="520" loading="lazy">
+            <span class="box"><img class="base" src="img/cadeau.webp" alt="" width="520" height="529" loading="lazy"><span class="glow"></span><span class="rays"></span><img class="lid" src="img/cadeau.webp" alt="" width="520" height="529" loading="lazy"></span>
           </div>
         </div>
         <p class="ghint">👆 Touchez le cadeau pour l'ouvrir</p>
@@ -957,6 +962,7 @@ nous avons l'honneur de vous convier
       { label:'Orange Money', logo:'img/orange-money.svg', name:'KOAGNE TAMDIE JOSUÉ', number:'+237 6 93 09 13 65', ussd:'#150*1*1*693091365#', qr:'img/qr-om-693091365.png' }
     ],
     venues: [
+      { label: 'Mariage traditionnel · 18h00', name: 'Ndiengbou Melam, chez TATAFO, Bafoussam', query: 'Ndiengbou, Bafoussam, Cameroun' },
       { label: 'Mariage civil · 13h00', name: 'Hôtel de ville de Bafoussam',   query: 'Hôtel de Ville de Bafoussam, Cameroun' },
       { label: "Vin d'honneur · 15h00", name: 'Ndiengbou Melam 1, Bafoussam',  query: 'Ndiengbou, Bafoussam, Cameroun' },
       { label: 'Soirée · 20h30',        name: 'Salle de fête MC2, Bafoussam',  query: 'Salle des fêtes MC2, Bafoussam, Cameroun' }
@@ -1205,7 +1211,7 @@ nous avons l'honneur de vous convier
          : d === 28 ? `<div title="Mariage civil, vin d'honneur & soirée"><span class="hday g"><svg><use href="#heart"/></svg><span>${d}</span></span></div>`
          : `<div>${d}</div>`;
   $('#calDays').innerHTML = cal;
-  $('#addCal').href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${enc('Mariage de Blondine & Josué')}&dates=20261127T170000Z/20261129T050000Z&details=${enc("Ven. 27/11 18h00 : mariage traditionnel\nSam. 28/11 13h00 : mariage civil (Hôtel de ville de Bafoussam)\n15h00 : vin d'honneur (Ndiengbou Melam 1)\n20h30 : soirée (Salle de fête MC2) jusqu'à l'aube")}&location=${enc('Bafoussam, Cameroun')}`;
+  $('#addCal').href = `https://www.google.com/calendar/render?action=TEMPLATE&text=${enc('Mariage de Blondine & Josué')}&dates=20261127T170000Z/20261129T050000Z&details=${enc("Ven. 27/11 18h00 : mariage traditionnel (Ndiengbou Melam, chez TATAFO)\nSam. 28/11 13h00 : mariage civil (Hôtel de ville de Bafoussam)\n15h00 : vin d'honneur (Ndiengbou Melam 1)\n20h30 : soirée (Salle de fête MC2) jusqu'à l'aube")}&location=${enc('Bafoussam, Cameroun')}`;
 
   /* ================================================================
      LIEUX — onglets + carte
@@ -1298,8 +1304,13 @@ nous avons l'honneur de vous convier
     return `<i style="width:${sz}px;height:${i%2 ? sz : sz/2}px;background:${c};border-radius:${i%2 ? '50%' : '2px'};margin:-${sz/2}px;--x:${Math.cos(a)*r}px;--y:${Math.sin(a)*r-30}px;--r:${Math.random()*540-270}deg"></i>`;
   }).join('');
   const gb = $('#giftBtn'), gd = $('#giftDlg');
-  gb.addEventListener('click', () => { gb.classList.remove('pop'); void gb.offsetWidth; gb.classList.add('pop'); setTimeout(() => gd.showModal(), 700); });
-  gd.addEventListener('close', () => gb.classList.remove('pop'));
+  // le cadeau tremble, le couvercle se soulève, la lumière sort… puis les moyens de paiement
+  gb.addEventListener('click', () => {
+    if (gb.classList.contains('open')) return;
+    gb.classList.add('open', 'pop');
+    setTimeout(() => gd.showModal(), reduce ? 0 : 1700);
+  });
+  gd.addEventListener('close', () => gb.classList.remove('open', 'pop'));
 
   if (q.get('open') === '1') reveal();
 })();
